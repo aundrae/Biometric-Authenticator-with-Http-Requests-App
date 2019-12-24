@@ -52,9 +52,9 @@ class _MakeRequestPage extends State<MakeRequest>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Request Leave of Absence"),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,6 @@ class _MakeRequestPage extends State<MakeRequest>{
               },
             ),
             SizedBox(height: 24),
-
             new DropdownButtonFormField<String>(
               decoration: new InputDecoration(labelText:"Select Reason for Leave", border: OutlineInputBorder(),hasFloatingPlaceholder: true),
               items: [
