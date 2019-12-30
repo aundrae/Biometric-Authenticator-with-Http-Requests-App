@@ -13,7 +13,7 @@ class MakeRequest extends StatefulWidget {
 class _MakeRequestPage extends State<MakeRequest> {
   final _formValidator = GlobalKey<FormState>();
   final _auth = LocalAuthentication();
-  String _value="";
+  String _value;
   final format = DateFormat("yyyy-MM-dd");
   String _startDate = "",
       _endDate = "",
@@ -194,12 +194,6 @@ class _MakeRequestPage extends State<MakeRequest> {
                 ),
                 SizedBox(height: 24),
                 new DropdownButtonFormField<String>(
-                  validator: (value) {
-                    if (_value.isEmpty) {
-                      return 'Please enter reason';
-                    }
-                    return null;
-                  },
                   decoration: new InputDecoration(
                       labelText: "Select Reason for Leave",
                       border: OutlineInputBorder(),
