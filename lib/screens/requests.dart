@@ -11,8 +11,9 @@ class MakeRequest extends StatefulWidget {
 }
 
 class _MakeRequestPage extends State<MakeRequest> {
+  final _formValidator = GlobalKey<FormState>();
   final _auth = LocalAuthentication();
-  String _value;
+  String _value="";
   final format = DateFormat("yyyy-MM-dd");
   String _startDate = "",
       _endDate = "",
@@ -95,12 +96,19 @@ class _MakeRequestPage extends State<MakeRequest> {
         title: Text("Request Leave of Absence"),
       ),
       body: Form(
+        key: _formValidator,
         child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 new TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter your Employee ID.';
+                    }
+                    return null;
+                  },
                   decoration: new InputDecoration(
                       labelText: "Enter Your Employee ID",
                       border: OutlineInputBorder(),
@@ -114,6 +122,12 @@ class _MakeRequestPage extends State<MakeRequest> {
                 ),
                 SizedBox(height: 24),
                 new TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter you name.';
+                    }
+                    return null;
+                  },
                   decoration: new InputDecoration(
                       labelText: "Enter Your Name",
                       border: OutlineInputBorder(),
@@ -127,6 +141,12 @@ class _MakeRequestPage extends State<MakeRequest> {
                 ),
                 SizedBox(height: 24),
                 new DateTimeField(
+                  validator: (value) {
+                    if (_startDate.isEmpty) {
+                      return 'Please enter start date';
+                    }
+                    return null;
+                  },
                   decoration: new InputDecoration(
                       labelText: "Enter Start Date",
                       border: OutlineInputBorder(),
@@ -147,6 +167,12 @@ class _MakeRequestPage extends State<MakeRequest> {
                 ),
                 SizedBox(height: 24),
                 new DateTimeField(
+                  validator: (value) {
+                    if (_endDate.isEmpty) {
+                      return 'Please enter end date';
+                    }
+                    return null;
+                  },
                   decoration: new InputDecoration(
                       labelText: "Enter End Date",
                       border: OutlineInputBorder(),
@@ -168,6 +194,12 @@ class _MakeRequestPage extends State<MakeRequest> {
                 ),
                 SizedBox(height: 24),
                 new DropdownButtonFormField<String>(
+                  validator: (value) {
+                    if (_value.isEmpty) {
+                      return 'Please enter reason';
+                    }
+                    return null;
+                  },
                   decoration: new InputDecoration(
                       labelText: "Select Reason for Leave",
                       border: OutlineInputBorder(),
@@ -201,11 +233,18 @@ class _MakeRequestPage extends State<MakeRequest> {
                       visibility=false;
                     }
                   },
+
                   value: _value,
                 ),
                 SizedBox(height: 24),
                 Visibility(
                   child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
                     decoration: new InputDecoration(
                         labelText: "Enter Your Reason",
                         border: OutlineInputBorder(),
@@ -225,8 +264,10 @@ class _MakeRequestPage extends State<MakeRequest> {
                     color: Colors.blue,
                     textColor: Colors.white,
                     onPressed: () {
-                      print(_employeeID.toString());
-                      _sendRequest();
+                      if(_formValidator.currentState.validate()){
+                        print(_employeeID.toString());
+                        _sendRequest();
+                      }
                       //Navigator.pop(context);
                     },
                     child: Text('Make Request'),
