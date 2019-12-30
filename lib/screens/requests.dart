@@ -13,7 +13,7 @@ class MakeRequest extends StatefulWidget {
 class _MakeRequestPage extends State<MakeRequest> {
   final _formValidator = GlobalKey<FormState>();
   final _auth = LocalAuthentication();
-  String _value;
+  String _value,_check="";
   final format = DateFormat("yyyy-MM-dd");
   String _startDate = "",
       _endDate = "",
@@ -218,6 +218,7 @@ class _MakeRequestPage extends State<MakeRequest> {
                   ],
                   onChanged: (String value) {
                     setState(() {
+                      _check="none";
                       _value = value;
                     });
                     if(_value == "Other"){
@@ -258,8 +259,10 @@ class _MakeRequestPage extends State<MakeRequest> {
                     color: Colors.blue,
                     textColor: Colors.white,
                     onPressed: () {
-                      if(_formValidator.currentState.validate()){
-                        print(_employeeID.toString());
+                      if(_check==""){
+                        _alertDialog("Enter Type Of Leave");
+                      }
+                      else if(_formValidator.currentState.validate()){
                         _sendRequest();
                       }
                       //Navigator.pop(context);
